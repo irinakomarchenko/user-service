@@ -1,8 +1,10 @@
 ![CI](https://github.com/irinakomarchenko/user-service/actions/workflows/ci.yml/badge.svg)
 
-# User Service Hibernate
+[![Maintainability](https://qlty.sh/badges/f7eb7ba9-446f-4494-bc5f-7b165347b5d1/maintainability.svg)](https://qlty.sh/gh/irinakomarchenko/projects/user-service)
 
-**User Service Hibernate** — консольное Java-приложение для управления пользователями с помощью Hibernate и PostgreSQL.  
+# User Service 
+
+**User Service** — консольное Java-приложение для управления пользователями с помощью Hibernate и PostgreSQL.  
 Реализованы основные CRUD-операции (создание, чтение, обновление, удаление) через удобное меню.
 
 ---
@@ -42,6 +44,12 @@ mvn checkstyle:check
 ```sh
 mvn test
 ```
+### 6. Формирование отчета о тестах
+
+```sh
+mvn verify
+```
+
 ### 5. Запустить приложение
 
 
