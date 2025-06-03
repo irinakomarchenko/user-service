@@ -1,3 +1,5 @@
+![CI](https://github.com/irinakomarchenko/user-service/actions/workflows/ci.yml/badge.svg)
+
 # User Service Hibernate
 
 **User Service Hibernate** — консольное Java-приложение для управления пользователями с помощью Hibernate и PostgreSQL.  
