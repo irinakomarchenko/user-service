@@ -1,10 +1,8 @@
 package myuserservice;
 
-import myuserservice.dao.UserDao;
 import myuserservice.dao.UserDaoImpl;
 import myuserservice.entity.User;
-import myuserservice.util.HibernateUtil;
-import org.hibernate.Session;
+import myuserservice.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +12,7 @@ import java.util.Scanner;
 public class App {
     private static final Logger log = LoggerFactory.getLogger(App.class);
     private static final Scanner scanner = new Scanner(System.in);
-    private static final UserDao userDao = new UserDaoImpl();
+    private static final UserService userService = new UserService(new UserDaoImpl());
 
     public static void main(String[] args) {
         try {
@@ -62,12 +60,12 @@ public class App {
         user.setEmail(email);
         user.setAge(age);
 
-        userDao.save(user);
+        userService.addUser(user);
         log.info("Пользователь {} успешно добавлен.", user);
     }
 
     private static void listUsers() {
-        List<User> users = userDao.findAll();
+        List<User> users = userService.getAllUsers();
         if (users.isEmpty()) {
             log.info("Пользователей не найдено.");
         } else {
@@ -77,7 +75,7 @@ public class App {
 
     private static void findUser() {
         long id = readLong("ID: ");
-        User user = userDao.findById(id);
+        User user = userService.getUser(id);
         if (user != null) {
             log.info("Найден пользователь: {}", user);
         } else {
@@ -88,7 +86,7 @@ public class App {
 
     private static void updateUser() {
         long id = readLong("ID: ");
-        User user = userDao.findById(id);
+        User user = userService.getUser(id);
         if (user == null) {
             log.warn("Пользователь с ID={} не найден", id);
             return;
@@ -101,13 +99,13 @@ public class App {
         System.out.print("Новый возраст: ");
         user.setAge(Integer.parseInt(scanner.nextLine()));
 
-        userDao.update(user);
+        userService.updateUser(user);
         log.info("Пользователь обновлён: {}", user);
     }
 
     private static void deleteUser() {
         long id = readLong("ID: ");
-        userDao.delete(id);
+        userService.deleteUser(id);
         log.info("Пользователь с ID {} удалён.", id);
     }
 

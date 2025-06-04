@@ -44,19 +44,19 @@ mvn checkstyle:check
 ```sh
 mvn test
 ```
-### 6. Формирование отчета о тестах
+### 5. Формирование отчета о тестах
 
 ```sh
 mvn verify
 ```
 
-### 5. Запустить приложение
+### 6. Запустить приложение
 
 
 ```sh
 mvn exec:java -Dexec.mainClass="myuserservice.App"
 ```
 
-### 6. Пример работы приложения
+### 7. Пример работы приложения
 ![img_1.png](readme-resources/img_1.png)
 ![img_2.png](readme-resources/img_2.png)

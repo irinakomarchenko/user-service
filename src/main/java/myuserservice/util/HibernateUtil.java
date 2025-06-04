@@ -12,12 +12,22 @@ public class HibernateUtil {
 
     private static SessionFactory buildSessionFactory() {
         try {
+            setDefaultIfAbsent("hibernate.connection.url", "jdbc:postgresql://localhost:5432/postgres");
+            setDefaultIfAbsent("hibernate.connection.username", "postgres");
+            setDefaultIfAbsent("hibernate.connection.password", "postgres");
+
             return new Configuration()
                     .configure("hibernate.cfg.xml")
                     .buildSessionFactory();
         } catch (Throwable ex) {
             log.error("Ошибка инициализации SessionFactory", ex);
             throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    private static void setDefaultIfAbsent(String key, String value) {
+        if (System.getProperty(key) == null) {
+            System.setProperty(key, value);
         }
     }
 
@@ -29,4 +39,3 @@ public class HibernateUtil {
         getSessionFactory().close();
     }
 }
-

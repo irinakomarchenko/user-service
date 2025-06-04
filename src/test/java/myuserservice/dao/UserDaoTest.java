@@ -4,6 +4,7 @@ import myuserservice.entity.User;
 import myuserservice.util.HibernateUtil;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.*;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.util.List;
 
@@ -12,11 +13,22 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserDaoTest {
 
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
+            .withDatabaseName("testdb")
+            .withUsername("test")
+            .withPassword("test");
+
     private UserDao userDao;
     private SessionFactory sessionFactory;
 
     @BeforeAll
     void setUp() {
+        postgres.start();
+
+        System.setProperty("hibernate.connection.url", postgres.getJdbcUrl());
+        System.setProperty("hibernate.connection.username", postgres.getUsername());
+        System.setProperty("hibernate.connection.password", postgres.getPassword());
+
         sessionFactory = HibernateUtil.getSessionFactory();
         userDao = new UserDaoImpl();
     }
@@ -24,6 +36,7 @@ class UserDaoTest {
     @AfterAll
     void tearDown() {
         HibernateUtil.shutdown();
+        postgres.stop();
     }
 
     @BeforeEach
